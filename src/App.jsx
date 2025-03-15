@@ -1,35 +1,49 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from "axios";
+import FileInput from "./components/FileInput";
+import Navbar from "./components/Navbar";
+import DataTable from './components/DataTable';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // const [file, setFile] = useState(null);
+  const [data, setData] = useState(null);
+
+  const [loading, setLoading] = useState(false)
+
+  const handleFileChange = async (e) => {
+    const selectedFile = await e.target.files[0]; // Get the file
+    // setFile(selectedFile);
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/file/upload", formData);
+      setLoading(false);
+      setData(response.data.data);
+    }
+    catch (error) {
+      setLoading(false);
+      console.error("Error uploading file:", error);
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div data-theme="" className="h-screen w-screen relative bg-gray-200 dark:bg-gray-500">
+      <Navbar />
+
+      <div className="container m-auto h-[calc(100%-48px)] flex">
+        {
+          !data ?
+            <FileInput onFileChange={handleFileChange} loadIcon={loading} />
+            :
+            <DataTable data={data} />
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
