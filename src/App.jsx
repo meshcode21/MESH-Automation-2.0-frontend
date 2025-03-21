@@ -29,9 +29,11 @@ function App() {
     try {
       setLoading(true);
       const response = await axios.post("/api/file/upload", formData);
-      const filterData = response.data.data.map(item => ({ ...item, status: "..." }));
+      const data = response.data.data.map((item) => ({ ...item, status: "..." }));
+      console.log(response);
+
       setLoading(false);
-      setData(filterData);
+      setData(data);
     }
     catch (error) {
       setLoading(false);
@@ -62,7 +64,7 @@ function App() {
         }));
 
 
-        if (eventData.status === "time out") {
+        if (eventData.status === "not selected") {
           const d = data.find((item, index) => index == eventData.index);
           setNotSelectedData((prev) => [...prev, { ...d, status: "not selected" }]);
           setCount(prev => { return { ...prev, notSelected: prev.notSelected++ } });
@@ -99,8 +101,24 @@ function App() {
     setCurrentIndex(0);
   }
 
+  async function handleDownload() {
+
+    fetch("/api/file/downloadResult")
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Result.xlsx"; // Change file name
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      })
+      .catch((error) => console.error("Download error:", error));
+  }
+
   return (
-    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, count, setCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick,automationTerminated, setAutomationTerminated }}>
+    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, count, setCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick, automationTerminated, setAutomationTerminated }}>
 
       <div data-theme="" className="h-screen w-screen relative bg-gray-100 dark:bg-gray-500">
 
@@ -112,19 +130,19 @@ function App() {
         </div>
 
         <button
-          className={`shadow-lg shadow-gray-400 absolute bottom-3 right-3 font-semibold text-xl rounded-full overflow-auto flex flex-nowrap items-center p-0 h-16 ${automationTerminated?'w-44':'w-16'} duration-300 ${!AutomationRunning && notSelectedData.length!=0?'cursor-pointer bg-green-300 text-gray-800 hover:w-44':' bg-green-300 text-gray-500'}`}
-          disabled={AutomationRunning || notSelectedData.length==0}
-          onClick={()=>alert()}
+          className={`shadow-lg shadow-gray-400 absolute bottom-3 right-3 font-semibold text-xl rounded-full overflow-hidden flex flex-nowrap items-center p-0 h-16 ${automationTerminated ? 'w-44' : 'w-16'} duration-300 text-gray-50 ${!AutomationRunning && notSelectedData.length != 0 ? 'cursor-pointer bg-green-600 hover:w-44' : ' bg-green-300'}`}
+          disabled={AutomationRunning || notSelectedData.length == 0}
+          onClick={handleDownload}
         >
           <div className='min-w-16 flex justify-center'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
           </div>
-          <p className='flex flex-col items-start'>
+          <div className='flex flex-col items-start'>
             <div className='text-[16px] leading-[16px]'>Result</div>
             <div className='leading-[25px]'>Download</div>
-          </p>
+          </div>
 
         </button>
 

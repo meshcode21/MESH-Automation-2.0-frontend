@@ -6,9 +6,9 @@ export default function PlayGround() {
     const { data, selectedData, notSelectedData } = useContext(globalContext);
 
     return (
-        <div className="grid grid-cols-6 grid-rows-6 gap-4 w-full p-4">
+        <div className="grid grid-cols-7 grid-rows-6 gap-4 w-full p-4">
 
-            <div className="scrollbar col-span-3 row-span-6 bg-white rounded px shadow overflow-auto relative">
+            <div className="scrollbar col-span-4 row-span-6 bg-white rounded px shadow overflow-auto relative">
                 <h1 className='bg-sky-500 text-center text-white z-10 sticky top-0'>List of All Candidates</h1>
                 <div className='px-2'>
                     <table class=" w-full" >
@@ -77,7 +77,7 @@ export default function PlayGround() {
                 </div>
             </div>
 
-            <div className="scrollbar col-span-3 row-span-2 col-start-4 bg-white rounded shadow overflow-auto relative">
+            <div className="scrollbar col-span-3 row-span-2 col-start-5 bg-white rounded shadow overflow-auto relative">
                 <h1 className='bg-[#4e9c05] text-center text-white sticky top-0'>List of <b className='font-semibold'>Selected</b> Candidates</h1>
                 <div>
                     <table class=" w-full" >
@@ -112,7 +112,7 @@ export default function PlayGround() {
                 </div>
             </div>
 
-            <div className="scrollbar col-span-3 row-span-4 col-start-4 row-start-3 bg-white rounded shadow overflow-auto relative">
+            <div className="scrollbar col-span-3 row-span-4 col-start-5 row-start-3 bg-white rounded shadow overflow-auto relative">
                 <h1 className='bg-[#c27012] text-center text-white sticky top-0'>List of <b className='font-semibold' s>Not-Selected</b> Candidates</h1>
                 <div>
                     <table class=" w-full" >
