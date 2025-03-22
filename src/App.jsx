@@ -30,7 +30,6 @@ function App() {
       setLoading(true);
       const response = await axios.post("/api/file/upload", formData);
       const data = response.data.data.map((item) => ({ ...item, status: "..." }));
-      console.log(response);
 
       setLoading(false);
       setData(data);
@@ -72,7 +71,8 @@ function App() {
 
         if (eventData.status === "selected") {
           const d = data.find((item, index) => index == eventData.index);
-          setSelectedData((prev) => [...prev, { ...d, status: "selected" }]);
+          setSelectedData((prev) => [...prev, { ...d, status: "selected",address: eventData.address }]);
+          setCount(prev => { return { ...prev, selected: prev.selected++ } });
         }
 
         if (eventData.message == "automation terminated") {
