@@ -13,7 +13,9 @@ function App() {
   const [selectedData, setSelectedData] = useState([]);
   const [notSelectedData, setNotSelectedData] = useState([]);
 
-  const [count, setCount] = useState({ selected: 0, notSelected: 0 });
+  // const [count, setCount] = useState({ selected: 0, notSelected: 0 });
+  const [selectedCount, setSelectedCount] = useState(0);
+  const [notSelectedCount, setNotSelectedCount] = useState(0);
   const [automationTerminated, setAutomationTerminated] = useState(false)
 
   const [loading, setLoading] = useState(false)
@@ -66,13 +68,15 @@ function App() {
         if (eventData.status === "not selected") {
           const d = data.find((item, index) => index == eventData.index);
           setNotSelectedData((prev) => [...prev, { ...d, status: "not selected" }]);
-          setCount(prev => { return { ...prev, notSelected: prev.notSelected++ } });
+          // setCount(prev => { return { ...prev, notSelected: prev.notSelected++ } });
+          setNotSelectedCount(p=>p+1);
         }
 
         if (eventData.status === "selected") {
           const d = data.find((item, index) => index == eventData.index);
           setSelectedData((prev) => [...prev, { ...d, status: "selected",address: eventData.address }]);
-          setCount(prev => { return { ...prev, selected: prev.selected++ } });
+          // setCount(prev => { return { ...prev, selected: prev.selected++ } });
+          setSelectedCount(p=>p+1);
         }
 
         if (eventData.message == "automation terminated") {
@@ -97,7 +101,9 @@ function App() {
     setData([]);
     setSelectedData([]);
     setNotSelectedData([]);
-    setCount({ selected: 0, notSelected: 0 });
+    // setCount({ selected: 0, notSelected: 0 });
+    setSelectedCount(0);
+    setNotSelectedCount(0);
     setCurrentIndex(0);
   }
 
@@ -118,7 +124,7 @@ function App() {
   }
 
   return (
-    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, count, setCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick, automationTerminated, setAutomationTerminated }}>
+    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, selectedCount,notSelectedCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick, automationTerminated, setAutomationTerminated }}>
 
       <div data-theme="" className="h-screen w-screen relative bg-gray-100 dark:bg-gray-500">
 

@@ -11,7 +11,7 @@ export default function PlayGround() {
             <div className="scrollbar col-span-4 row-span-6 bg-white rounded px shadow overflow-auto relative">
                 <h1 className='bg-sky-500 text-center text-white z-10 sticky top-0'>List of All Candidates</h1>
                 <div className='px-2'>
-                    <table class=" w-full" >
+                    <table className=" w-full" >
                         <thead className='border-b border-gray-400'>
                             <tr>
                                 <th>S.N.</th>
@@ -24,16 +24,16 @@ export default function PlayGround() {
                             {
                                 data.map((item, index) => {
                                     return (
-                                        <tr key={index + 1} className='border-b border-gray-400'>
+                                        <tr key={String(index)} className='border-b border-gray-400'>
                                             <td className='w-10'>
-                                                <p className='text-center'>{index + 1}.</p>
+                                                <p className='text-center'>{String(index+1)}.</p>
                                             </td>
                                             <td className='flex'>
                                                 <div className='flex flex-col px-2 '>
                                                     <h1 className='text-base'>Conformatio No. <span className='font-semibold'>{item.confirmationNumber}</span></h1>
 
                                                     <p>Name: <span className='font-semibold'>{item.name}</span></p>
-                                                    <p>YOB: <span className='font-semibold'>{item.DOB}</span></p>
+                                                    <p>YOB: <span className='font-semibold'>{item.DOB.toString()}</span></p>
 
                                                 </div>
                                             </td>
@@ -80,21 +80,21 @@ export default function PlayGround() {
             <div className="scrollbar col-span-3 row-span-2 col-start-5 bg-white rounded shadow overflow-auto relative">
                 <h1 className='bg-[#4e9c05] text-center text-white sticky top-0'>List of <b className='font-semibold'>Selected</b> Candidates</h1>
                 <div>
-                    <table class=" w-full" >
+                    <table className=" w-full" >
                         <tbody className='text-sm'>
                             {
                                 selectedData.map((item, index) => {
                                     return (
-                                        <tr key={index + 1} className='border-b border-gray-400'>
+                                        <tr key={String(index)} className='border-b border-gray-400'>
                                             <td className='w-16'>
-                                                <p className='text-center'>{index + 1}.</p>
+                                                <p className='text-center'>{String(index+1)}.</p>
                                             </td>
                                             <td className='flex'>
                                                 <div className='flex flex-col px-2 '>
                                                     <h1 className='text-base'>Conformatio No. <span className='font-semibold'>{item.confirmationNumber}</span></h1>
 
                                                     <p>Name: <span className='font-semibold'>{item.name}</span></p>
-                                                    <p>YOB: <span className='font-semibold'>{item.DOB}</span></p>
+                                                    <p>YOB: <span className='font-semibold'>{item.DOB.toString()}</span></p>
                                                     <p>Address: <span className='font-semibold'>{item.address}</span></p>
 
                                                 </div>
@@ -116,21 +116,21 @@ export default function PlayGround() {
             <div className="scrollbar col-span-3 row-span-4 col-start-5 row-start-3 bg-white rounded shadow overflow-auto relative">
                 <h1 className='bg-[#c27012] text-center text-white sticky top-0'>List of <b className='font-semibold' s>Not-Selected</b> Candidates</h1>
                 <div>
-                    <table class=" w-full" >
+                    <table className=" w-full" >
                         <tbody className='text-sm'>
                             {
                                 notSelectedData.map((item, index) => {
                                     return (
-                                        <tr key={index + 1} className='border-b border-gray-400'>
+                                        <tr key={String(index)} className='border-b border-gray-400'>
                                             <td className='w-16'>
-                                                <p className='text-center'>{index + 1}.</p>
+                                                <p className='text-center'>{String(index+1)}.</p>
                                             </td>
                                             <td className='flex'>
                                                 <div className='flex flex-col px-2 '>
                                                     <h1 className='text-base'>Conformatio No. <span className='font-semibold'>{item.confirmationNumber}</span></h1>
 
                                                     <p>Name: <span className='font-semibold'>{item.name}</span></p>
-                                                    <p>YOB: <span className='font-semibold'>{item.DOB}</span></p>
+                                                    <p>YOB: <span className='font-semibold'>{item.DOB.toString()}</span></p>
 
                                                 </div>
                                             </td>

@@ -4,20 +4,18 @@ import { globalContext } from './contextAPI'
 
 export default function SideBar({ classname }) {
 
-  const { currentIndex, data, count, handleAutomationClick, handleResetClick, AutomationRunning, automationTerminated, setAutomationTerminated } = useContext(globalContext);
+  const { currentIndex, data, selectedCount, notSelectedCount, handleAutomationClick, handleResetClick, AutomationRunning, automationTerminated, setAutomationTerminated } = useContext(globalContext);
 
   return (
     <div className={`${classname} bg-white h-full w-80 border-r-2 border-gray-400`}>
       <div className='w-[90%]'>
-        <FileInput
-          isDisable={data.length != 0}
-        />
+        <FileInput isDisable={data.length != 0 ? true : false} />
       </div>
 
       <div className=' w-[90%] py-6 flex flex-col gap-2 text-gray-600'>
         <p className='bg-white p-2 rounded shadow'>Total candidate : <span className='font-semibold'>{data?.length || 0}</span></p>
-        <p className='bg-white p-2 rounded shadow'>Selected : <span className='font-semibold'>{count.selected}</span></p>
-        <p className='bg-white p-2 rounded shadow'>Not Selected : <span className='font-semibold'>{count.notSelected}</span></p>
+        <p className='bg-white p-2 rounded shadow'>Selected : <span className='font-semibold'>{selectedCount.toString()}</span></p>
+        <p className='bg-white p-2 rounded shadow'>Not Selected : <span className='font-semibold'>{notSelectedCount.toString()}</span></p>
         <p className='bg-white p-2 rounded shadow'>Current Index : <span className='font-semibold'>{AutomationRunning ? currentIndex + 1 : 0}</span></p>
       </div>
 
