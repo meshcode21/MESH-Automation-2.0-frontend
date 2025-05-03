@@ -69,14 +69,14 @@ function App() {
           const d = data.find((item, index) => index == eventData.index);
           setNotSelectedData((prev) => [...prev, { ...d, status: "not selected" }]);
           // setCount(prev => { return { ...prev, notSelected: prev.notSelected++ } });
-          setNotSelectedCount(p=>p+1);
+          setNotSelectedCount(p => p + 1);
         }
 
         if (eventData.status === "selected") {
           const d = data.find((item, index) => index == eventData.index);
-          setSelectedData((prev) => [...prev, { ...d, status: "selected",address: eventData.address }]);
+          setSelectedData((prev) => [...prev, { ...d, status: "selected", address: eventData.address }]);
           // setCount(prev => { return { ...prev, selected: prev.selected++ } });
-          setSelectedCount(p=>p+1);
+          setSelectedCount(p => p + 1);
         }
 
         if (eventData.message == "automation terminated") {
@@ -108,7 +108,7 @@ function App() {
   }
 
   async function handleDownload() {
-
+    console.log("Downloading file...");
     fetch("/api/file/downloadResult")
       .then((response) => response.blob())
       .then((blob) => {
@@ -119,25 +119,26 @@ function App() {
         document.body.appendChild(a);
         a.click();
         a.remove();
+        console.log("File downloaded successfully.");
       })
       .catch((error) => console.error("Download error:", error));
   }
 
   return (
-    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, selectedCount,notSelectedCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick, automationTerminated, setAutomationTerminated }}>
+    <globalContext.Provider value={{ currentIndex, data, setData, selectedData, notSelectedData, selectedCount, notSelectedCount, loading, setLoading, AutomationRunning, setAutomationRunning, handleFileChange, handleAutomationClick, handleResetClick, automationTerminated, setAutomationTerminated }}>
 
       <div data-theme="" className="h-screen w-screen relative bg-gray-100 dark:bg-gray-500">
 
-        <Navbar classname={'h-16'} />
+        <Navbar/>
 
-        <div className="w-full h-[calc(100%-4rem)] flex">
+        <div className="w-full h-[calc(100%-3rem)] flex">
           <SideBar classname={'flex flex-col justify-between items-center'} />
           <PlayGround />
         </div>
 
         <button
-          className={`shadow-lg shadow-gray-400 absolute bottom-3 right-3 font-semibold text-xl rounded-full overflow-hidden flex flex-nowrap items-center p-0 h-16 ${automationTerminated ? 'w-44' : 'w-16'} duration-300 text-gray-50 ${!AutomationRunning && notSelectedData.length != 0 ? 'cursor-pointer bg-green-600 hover:w-44' : ' bg-green-300'}`}
-          disabled={AutomationRunning || notSelectedData.length == 0}
+          className={`shadow-lg shadow-gray-400 absolute bottom-3 right-3 font-semibold text-xl rounded-full overflow-hidden flex flex-nowrap items-center p-0 h-16 ${automationTerminated ? 'w-44' : 'w-16'} duration-300 text-gray-50 ${!AutomationRunning && (notSelectedData.length != 0 || selectedData.length != 0) ? 'cursor-pointer bg-green-600 hover:w-44' : ' bg-green-300'}`}
+          disabled={AutomationRunning || (notSelectedData.length == 0 && selectedData.length == 0)}
           onClick={handleDownload}
         >
           <div className='min-w-16 flex justify-center'>
